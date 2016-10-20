@@ -59,7 +59,8 @@ type OAuthProxy struct {
 	DisplayHtpasswdForm bool
 	serveMux            http.Handler
 	PassBasicAuth       bool
-	SkipProviderButton  bool
+  PassTokenAuth       bool
+  SkipProviderButton  bool
 	BasicAuthPassword   string
 	PassAccessToken     bool
 	CookieCipher        *cookie.Cipher
@@ -602,7 +603,14 @@ func (p *OAuthProxy) Authenticate(rw http.ResponseWriter, req *http.Request) int
 			req.Header["X-Forwarded-Email"] = []string{session.Email}
 		}
 	}
-	if p.PassAccessToken && session.AccessToken != "" {
+  if p.PassTokenAuth {
+    req.SetTokenAuth(session.User + "hubbahubba")
+    req.Header["X-Forwarded-User"] = []string{session.User}
+		if session.Email != "" {
+			req.Header["X-Forwarded-Email"] = []string{session.Email}
+		}
+  }
+  if p.PassAccessToken && session.AccessToken != "" {
 		req.Header["X-Forwarded-Access-Token"] = []string{session.AccessToken}
 	}
 	if session.Email == "" {
