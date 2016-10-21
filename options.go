@@ -96,7 +96,7 @@ func NewOptions() *Options {
 		CookieExpire:        time.Duration(168) * time.Hour,
 		CookieRefresh:       time.Duration(0),
 		PassBasicAuth:       true,
-    PassAuthToken:       false,
+    PassTokenAuth:       false,
     PassAccessToken:     false,
 		PassHostHeader:      true,
 		SkipProviderButton:  false,
