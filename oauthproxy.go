@@ -604,14 +604,14 @@ func (p *OAuthProxy) Authenticate(rw http.ResponseWriter, req *http.Request) int
 		}
 	}
   if p.PassTokenAuth {
-    req.Header["Authentication"] = []string{("Authentication " + session.User + "hubbahubba")}
+    req.Header["Authentication"] = []string{("Token " + session.User + "hubbahubba")}
     req.Header["X-Forwarded-User"] = []string{session.User}
 		if session.Email != "" {
 			req.Header["X-Forwarded-Email"] = []string{session.Email}
 		}
   }
   if p.PassAccessToken && session.AccessToken != "" {
-    req.Header["Authentication"] = []string{"Authentication " + session.AccessToken}
+    req.Header["Authentication"] = []string{"Token " + session.AccessToken}
     req.Header["X-Forwarded-Access-Token"] = []string{session.AccessToken}
 	}
 	if session.Email == "" {
